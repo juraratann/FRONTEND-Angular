@@ -1,0 +1,65 @@
+<!-- 
+<td class="align-middle text-center">
+  <p class="font-weight-bold mb-0">{{ order.ordersId }}</p>
+</td>
+<td class="align-middle text-center">
+  <p class="font-weight-bold mb-0">{{ order.userId }}</p>
+</td>
+<td *ngIf="userData" class="align-middle text-center">
+  <p class="font-weight-bold mb-0">{{ userData.firstName }} {{ userData.lastName }}</p>
+</td>
+<td *ngIf="userData" class="align-middle text-center">
+  <span class="text-xs">{{ userData.phone }}</span>
+</td>
+<td class="align-middle text-center">
+  <span *ngIf="order.status == '1'" class="badge bg-success">ชำระเงินแล้ว</span>
+  <span *ngIf="order.status != '1'" class="badge bg-danger">ยังไม่ชำระเงิน</span>
+</td>
+<td class="align-middle text-center">
+  <span class="text-xs">{{ order.createDate | date: 'medium' }}</span>
+</td>
+<td class="align-middle text-center">
+  <span class="text-xs">{{ order.address }}</span>
+</td>
+<td class="align-middle text-center">
+  <span class="text-xs">{{ order.province }}</span>
+</td>
+<td class="align-middle text-center">
+  <span class="text-xs">{{ order.zipcode }}</span>
+</td> -->
+
+<form [formGroup]="updateOrderForm" (ngSubmit)="onSubmit()" class="mt-6">
+    <div class="form-group">
+      <label for="orderId">Order ID</label>
+      <input  formControlName="orderId" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input  formControlName="userId" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="orderDate">Order Date</label>
+      <input  formControlName="orderDate" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="itemCode">Item Code</label>
+      <input  formControlName="itemCode" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="totalAmount">Total Amount</label>
+      <input  formControlName="totalAmount" type="number" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="paymentId">Payment ID</label>
+      <input  formControlName="paymentId" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="addressId">Address ID</label>
+      <input  formControlName="addressId" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input  formControlName="status" type="text" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-4" >Update Order</button>
+  </form>

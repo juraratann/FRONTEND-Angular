@@ -1,0 +1,19 @@
+<!-- Payment Popup -->
+<div id="paymentPopup" class="popup">
+  <div class="popup-content">
+    <div class="popup-header">
+      <h5 class="popup-title">ชำระพร้อมเพย์</h5>
+      <button type="button" class="btn-close" onclick="closePopup()">&times;</button>
+    </div>
+    <div class="popup-body">
+      <img src="https://www.paocloud.co.th/wp-content/uploads/2021/01/Screen-Shot-2564-01-26-at-18.56.53.png" alt="QR Code 2" class="img-fluid">
+      <button class="btn btn-active btn-neutral text-simple large-text-button mt-3">
+        <span>ราคา </span>
+        <span>{{ grandTotal | currency: ' ฿ ' }}</span>
+      </button>
+    </div>
+    <div class="popup-footer">
+      <button type="button" class="btn btn-success btn-block-lg" onclick="confirmPayment()">ยืนยัน</button>
+    </div>
+  </div>
+</div>

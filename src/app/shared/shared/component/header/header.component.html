@@ -1,0 +1,37 @@
+<header class="p-3 bg-blue-500 text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a routerLink="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <!-- <li *ngIf="!userDetail"><a routerLink="/login" routerLinkActive="router-link-active" class="nav-link px-2 text-white">Login</a></li> -->
+          <!-- <li *ngIf="userDetail?.roleId == 2"><a routerLink="/product-home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">หน้าหลัก</a></li> -->
+          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">หน้าหลัก</a></li>
+          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/user-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">คำสั่งซื้อ</a></li>
+          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">โปรไฟล์</a></li>
+      
+          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/manage-user" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการลูกค้า</a></li>
+          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/manage-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการสินค้า</a></li>
+          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/order" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการคำสั่งซื้อ</a></li>
+          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">โปรไฟล์</a></li>
+          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/report" routerLinkActive="router-link-active" class="nav-link px-2 text-white">รายงาน</a></li>
+        </ul>
+        <div class="text-end" *ngIf="!userDetail">
+          <button type="button" class="btn btn-outline-light me-2" routerLink="/login" routerLinkActive="router-link-active">Login</button>
+          <button type="button" class="btn btn-warning" routerLink="/register" routerLinkActive="router-link-active">Sign-up</button>
+        </div>
+        <button *ngIf="userDetail?.roleId == 2" class="btn btn-dark me-4 d-flex align-items-center mb-md-1" routerLink="/cart">
+          <i style="font-size: 18px; color: blue" class="fas fa-cart-plus me-2" routerLinkActive="router-link-active"></i>
+          <div   style="font-size: 10px; margin-left: 5px; color: black;" class="badge btn-light">{{ totalItem }}</div>
+        </button>
+   
+          <div class="text-end" *ngIf="userDetail">
+            <button type="button" class="btn btn-outline-light me-2" (click)="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+  </header>
+  

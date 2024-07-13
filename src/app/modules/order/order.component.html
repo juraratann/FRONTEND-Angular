@@ -1,0 +1,65 @@
+<div *ngFor="let order of orderList" class="bg-white lg:border-gray-500 p-2 mb-2 rounded-lg shadow-sm">
+    <div class="bg-gray-600 shadow-dark border-radius-lg p-1 d-flex justify-content-between align-items-center">
+        <h6 class="text-white text-capitalize">จัดการคำสั่งซื้อ</h6>
+        <div class="d-flex ms-auto">
+            <button class="btn btn-warning me-1 btn-sm" (click)="(order.ordersId)">แก้ไข</button>
+            <button class="btn btn-danger btn-sm" (click)="onDeleteOrder(order.ordersId)">ลบ</button>
+        </div>
+    </div>
+    
+    <table class="min-w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">สินค้า</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">ออเดอร์</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">ชื่อผู้ใช้</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">ที่อยู่</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">วันที่สั่งสินค้า</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">รายละเอียดสินค้า</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">จำนวน</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">ราคารวม</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">สถานะการชำระเงิน</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of order.productList; let i = index" class="border-b">
+                <td class="p-2 text-center">
+                    <div class="d-flex px-1 py-1">
+                        <div>
+                            <img *ngIf="product.imgList.length > 0" [src]="product.imgList[0]" class="product-img w-12 h-12 object-cover" alt="Product Image">
+                        </div>
+                    </div>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-700">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-xs">{{ order.ordersId }}</h6>
+                    </div>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-700">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-xs">{{ order.userData.fristName }} {{ order.userData.lastName }}</h6>
+                    </div>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span class="text-secondary text-xxs font-weight-bold">{{ order.address }} {{ order.province }} {{ order.zipcode }}</span>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span class="text-secondary text-xxs font-weight-bold">{{ order.createDate | date: 'medium' }}</span>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span class="text-secondary text-xxs font-weight-bold">{{ product.productDesc }}</span>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span class="text-secondary text-xxs font-weight-bold">{{ getQuantity(order, product.productId) }} ชิ้น</span>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span class="text-secondary text-danger font-weight-bold">{{ product.price * getQuantity(order, product.productId) | currency : 'THB' }}</span>
+                </td>
+                <td class="p-2 text-center text-xs text-gray-600">
+                    <span *ngIf="order.status == '1'" class="badge badge-sm bg-gradient-success">ชำระเงินแล้ว</span>
+                    <span *ngIf="order.status != '1'" class="badge badge-sm bg-gradient-danger">ยังไม่ชำระเงิน</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

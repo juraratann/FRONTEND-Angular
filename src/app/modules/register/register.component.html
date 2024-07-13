@@ -1,0 +1,58 @@
+<div class="container mt-5">
+	<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="border border-gray-100 p-5 rounded bg-light shadow">
+	  <h1 class="mb-4">Register</h1>
+  
+	  <div class="row">
+		<div class="col-md-6 mb-3">
+		  <label for="firstName" class="form-label">First Name</label>
+		  <input formControlName="firstName" class="form-control" placeholder="First name" type="text">
+		</div>
+		<div class="col-md-6 mb-3">
+		  <label for="lastName" class="form-label">Last Name</label>
+		  <input formControlName="lastName" class="form-control" placeholder="Last Name" type="text">
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-md-6 mb-3">
+		  <label for="firstName" class="form-label">Phone</label>
+		  <input formControlName="phone" class="form-control" placeholder="Phone number" type="text">
+		</div>
+		<div class="col-md-6 mb-3">
+		  <label for="lastName" class="form-label">Age</label>
+		  <input formControlName="age" class="form-control" placeholder="Age" type="text">
+		</div>
+	  </div>
+	  
+	  <div class="row">
+		<div class="col-md-6 mb-3">
+			<label for="firstName" class="form-label">กรุณาเลือก Role</label>
+			<select class="form-control" formControlName="roleId">
+				<option selected="" value="">Role</option>
+				<option *ngFor="let item of roleList" value="{{item.id}}">{{item.roleName}}</option>
+			</select>
+		 </div> 
+	  </div>
+	  
+	  <div class="row">
+		<div class="col-md-6 mb-3">
+		  <label for="firstName" class="form-label">UserName</label>
+		  <input formControlName="userName" class="form-control" placeholder="username" type="text">
+		</div>
+		<div class="col-md-6 mb-3">
+		  <label for="lastName" class="form-label">Password</label>
+		  <input formControlName="password" class="form-control" placeholder="Create password" type="password" >
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-md-6 mb-3">
+		  <label for="firstName" class="form-label">ConfirmPassword</label>
+		  <input formControlName="confirmPassword" class="form-control" placeholder="Repeat password" type="password">
+		</div>
+	  </div>
+  
+	  <!-- Other form fields... -->
+  
+	  <button type="submit" class="btn btn-primary btn-block">Save Account</button>
+	</form>
+  </div>
+  

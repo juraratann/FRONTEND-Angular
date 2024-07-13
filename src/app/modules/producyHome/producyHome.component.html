@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recent Posts</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .custom-img {
+      height: 200px;
+      object-fit: cover;
+    }
+    .post-card:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s;
+    }
+    .tag {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <section class="py-5">
+    <div class="container">
+      <h1 class="mb-5 text-center font-weight-bold">สินค้าแนะนำ</h1>
+      <div class="row">
+        <!-- *ngFor loop starts here -->
+        <div class="col-sm-6 col-md-4 mb-4" *ngFor="let product of productList">
+          <div class="card post-card h-100 shadow-sm">
+            <a [routerLink]="'/home'" class="stretched-link">
+              <img *ngIf="product.imgList.length > 0" [src]="product.imgList[0]" class="card-img-top custom-img" alt="Product Image">
+              <div class="card-body">
+                <h5 class="card-title text-primary">{{ product.productName }}</h5>
+                <h6 class="card-subtitle mb-2 text-dark">{{ product.productType[0]?.productTypeName || '' }}</h6>
+                <p class="card-text text-muted">{{ product.productType[0]?.productTypeDesc || '' }}</p>
+                <div class="d-flex flex-wrap mt-2">
+                  <span class="tag">{{ product.price | currency }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- *ngFor loop ends here -->
+      </div>
+    </div>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
