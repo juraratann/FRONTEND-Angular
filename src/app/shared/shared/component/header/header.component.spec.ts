@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   userDetail: any;  // เก็บข้อมูลของผู้ใช้
   cartItemCount: number = 0;  // เก็บจำนวนรายการในตะกร้า
+imgUser: any;
 
   constructor(
     private router: Router,

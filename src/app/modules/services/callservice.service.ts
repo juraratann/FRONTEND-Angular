@@ -110,14 +110,6 @@ export class CallserviceService {
   deleteImage(fileName : any) : Observable<any> {
     return this.http.delete(API_ENDPOINT.concat('/product/deleteImgByFileName?fileName='+ fileName));
   }
-  
-  userImage(userId : any) : Observable<any> {
-    return this.http.get<any>(API_ENDPOINT.concat('/imguser/getById?id=' + userId))
-  }
-  
-  usersImage(userId : any) : Observable<any> {
-    return this.http.get<any>(API_ENDPOINT.concat('/imguser/getAll' + userId))
-  }
 
   address(data : any) : Observable<any> {
     const body = JSON.stringify(data);
@@ -142,9 +134,6 @@ export class CallserviceService {
     return this.http.get(API_ENDPOINT.concat('/order/getById?orderId=' + orderId))
   }
 
-  // getAllOrder() : Observable<any> {
-  //   return this.http.get(API_ENDPOINT.concat('/order/getAll'));
-  // }
   getAllOrderitem() : Observable<any> {
     return this.http.get(API_ENDPOINT.concat('/orderitem/getAll'));
   }
@@ -175,6 +164,58 @@ export class CallserviceService {
   // }
   deleteOrder(ordersId: any): Observable<any> {
     return this.http.delete(API_ENDPOINT.concat('/order/delete?ordersId=' + ordersId));
+  }
+  
+  userImage(userId : any) : Observable<any> {
+    return this.http.get<any>(API_ENDPOINT.concat('/imguser/getById?id=' + userId))
+  }
+  
+  usersImage(userId : any) : Observable<any> {
+    return this.http.get<any>(API_ENDPOINT.concat('/imguser/getAll' + userId))
+  }
+
+  updateProfileAvatar(data : FormData, Id : any) : Observable<any> {
+    return this.http.put<any>(API_ENDPOINT.concat('/imguser/update/'+ Id), data)
+  }
+  
+  saveQrcode(formData: FormData, ordersId : any) : Observable<any> {
+    return this.http.post<any>(API_ENDPOINT.concat('/payment/saveImage/' + ordersId), formData)
+  }
+
+  deletePaymentImage(fileName : any) : Observable<any> {
+    return this.http.delete(API_ENDPOINT.concat('/payment/deleteImgByFileName?fileName='+ fileName));
+  }
+  getAllPaymentImage() : Observable<any> {
+    return this.http.get(API_ENDPOINT.concat('/payment/getAllPayments'));
+  }
+  // removeImgByProductId(productId : any) : Observable<any> {
+  //   return this.http.delete(API_ENDPOINT.concat('/product/removeImgByProductId?productId='+ productId));
+  // }
+  getPaymentImgByUserId(ordersId:any) : Observable<any> {
+    return this.http.get(API_ENDPOINT.concat('/payment/getPaymentImgByOrdersId?ordersId=' + ordersId))
+  }
+
+  getPaymentImgBlobThumbnail(fileName: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'    
+    });
+    return this.http.get<Blob>(API_ENDPOINT.concat('/payment/getImageByte?fileName='+fileName)
+    , {headers: headers, responseType: 'blob' as 'json' });
+  }
+
+  gePaymentImageByte(fileName: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'    
+    });
+    return this.http.get<Blob>(API_ENDPOINT.concat('/payment/getImageByte?fileName='+fileName)
+    , {headers: headers, responseType: 'blob' as 'json' });
+  }
+  
+  savelmguser(data: any): Observable<any> {
+    const body = JSON.stringify(data);
+    return this.http.post<any>(API_ENDPOINT.concat('/imguser/save'), body, httpOptions)
   }
 
 

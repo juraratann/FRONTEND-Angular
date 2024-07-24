@@ -1,9 +1,10 @@
 <div *ngFor="let order of orderList" class="bg-white lg:border-gray-500 p-2 mb-2 rounded-lg shadow-sm">
-    <div class="bg-gray-600 shadow-dark border-radius-lg p-1 d-flex justify-content-between align-items-center">
+    <div class="bg-gray-600 shadow-dark border-radius-lg p-3 d-flex justify-content-between align-items-center">
         <h6 class="text-white text-capitalize">จัดการคำสั่งซื้อ</h6>
         <div class="d-flex ms-auto">
-            <button class="btn btn-warning me-1 btn-sm" (click)="(order.ordersId)">แก้ไข</button>
-            <button class="btn btn-danger btn-sm" (click)="onDeleteOrder(order.ordersId)">ลบ</button>
+            <!-- <button class="btn btn-warning me-1 btn-sm" (click)="(order.ordersId)">แก้ไข</button> -->
+            <!-- <button class="btn btn-danger btn-sm" (click)="onDeleteOrder(order.ordersId)">ลบ</button> -->
+            
         </div>
     </div>
     
@@ -19,6 +20,8 @@
                 <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">จำนวน</th>
                 <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">ราคารวม</th>
                 <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">สถานะการชำระเงิน</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">สลิป</th>
+                <th class="whitespace-normal py-2 text-xs font-medium text-gray-600 sm:px-1 text-center">จัดการ</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +33,7 @@
                         </div>
                     </div>
                 </td>
+                
                 <td class="p-2 text-center text-xs text-gray-700">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-xs">{{ order.ordersId }}</h6>
@@ -55,11 +59,121 @@
                 <td class="p-2 text-center text-xs text-gray-600">
                     <span class="text-secondary text-danger font-weight-bold">{{ product.price * getQuantity(order, product.productId) | currency : 'THB' }}</span>
                 </td>
-                <td class="p-2 text-center text-xs text-gray-600">
-                    <span *ngIf="order.status == '1'" class="badge badge-sm bg-gradient-success">ชำระเงินแล้ว</span>
-                    <span *ngIf="order.status != '1'" class="badge badge-sm bg-gradient-danger">ยังไม่ชำระเงิน</span>
+                <td class="px-2 py-4 whitespace-nowrap text-xs text-gray-500" (click)="setSelectedProduct(order)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <span *ngIf="order.status == '1'" class="badge badge-x bg-gradient-warning">กำลังตรวจสอบ</span>
+                  <span *ngIf="order.status == '2'" class="badge badge-x bg-gradient-success">ชำระเงินเรียบร้อยแล้ว</span>
+                  <span *ngIf="order.status == '3'" class="badge badge-x bg-gradient-danger">ยังไม่ชำระเงิน</span>
+                  <span *ngIf="order.status == '4'" class="badge badge-sm bg-gradient-secondary">ชำระเงินไม่ครบตามจำนวน</span>
+              </td>
+                <td class="px-2 py-4 whitespace-nowrap text-xs text-gray-500" (click)="setSelectedOrder(order)" data-bs-toggle="modal" data-bs-target="#exampleModals">
+                  <div *ngFor="let payment of order.paymentImage; let i = index"  >
+                    
+                    <!-- <div class="d-flex justify-between"  *ngIf="order.paymentImage && order.paymentImage.length > 0; else noPaymentImage"> -->
+                        <img *ngIf="payment.imgList.length > 0" [src]="payment.imgList[0]" class="product-img" alt="Payment Image" width="100" />
+                    <!-- </div> -->
+                <!-- <ng-template #noPaymentImage>
+                  <p class="text-bold">เก็บเงินปลายทาง</p>
+                </ng-template> -->
+                </div>
                 </td>
+                <td class="p-4 text-center text-sm text-gray-600">
+                  <div class="d-flex justify-content-between mx-auto" style="width: 80px;">
+                      <!-- <button (click)="setSelectedProduct(order)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-blue-500 rounded-md hover:underline">
+                        <i class="bi bi-credit-card-2-back"></i>
+                      </button> -->
+                      <button (click)="setSelectedProduct(order)" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-outline-warning">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+                      
+        <button type="button" class="btn btn-outline-danger" (click)="onDeleteOrder(order.ordersId)" >
+          <i class="bi bi-trash-fill"></i>
+        </button>
+                      
+                      <!-- <button (click)="onDeleteOrder(order.ordersId)" class="text-red-600 rounded-md hover:underline">
+                          <i class="bi bi-clipboard-x"></i>
+                      </button> -->
+                  </div>
+              </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+
+<div class="modal fade pt-4" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-width">
+      <div class="modal-content">
+        <div class="modal-header bg-white shadow-dark">
+          <h4 class="modal-title text-black" id="exampleModalLabel">
+            กำลังตรวจสอบ
+          </h4>
+          <button type="button" class="btn-close red-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex flex-column align-items-center">
+          <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body d-flex flex-column align-items-center">
+              <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body-content w-100 text-center">
+                  <div class="form-outline">
+                    <label class="form-label" for="paymentStatus">สถานะการชำระเงิน</label>
+                    <select formControlName="status" id="paymentStatus" class="form-select form-select-lg">
+                      <option *ngFor="let status of statuses" [value]="status.value" [selected]="status.value == selectedProduct?.status">
+                        {{ status.label }}
+                      </option>
+                    </select>
+                  </div>
+                  <br />
+                  <button name="submit" type="submit" class="btn btn-success">
+                    Update 
+                  </button>
+                </div>
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-3" id="paymentModal2Label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div *ngIf="selectedOrder?.allimgs && selectedOrder.allimgs.length > 0; else noPaymentImage">
+                <div class="modal-body text-center" *ngFor="let allimg of selectedOrder.allimgs; let i = index">
+                    <img class="w-50 h-auto rounded mx-auto d-block mb-3" [src]="allimg" alt="QR Code">
+                </div>
+            </div>
+            <ng-template #noPaymentImage>
+                <p class="text-bold text-center">No Payment Images Available</p>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+
+  
+
+  <!-- <div class="modal fade pt-4" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-white shadow-sm">
+                <h4 class="modal-title text-black" id="exampleModalLabel">Payment Images</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-wrap justify-content-center">
+                <div *ngIf="selectedOrder?.allimgs && selectedOrder.allimgs.length > 0; else noPaymentImage">
+                    <div *ngFor="let allimg of selectedOrder.allimgs; let i = index" class="img-wrapper m-2">
+                        <img [src]="allimg" class="product-img img-fluid" alt="Payment Image" />
+                    </div>
+                </div>
+                <ng-template #noPaymentImage>
+                    <p class="text-bold text-center">No Payment Images Available</p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div> -->

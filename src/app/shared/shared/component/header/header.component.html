@@ -1,37 +1,123 @@
-<header class="p-3 bg-blue-500 text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a routerLink="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <!-- <li *ngIf="!userDetail"><a routerLink="/login" routerLinkActive="router-link-active" class="nav-link px-2 text-white">Login</a></li> -->
-          <!-- <li *ngIf="userDetail?.roleId == 2"><a routerLink="/product-home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">หน้าหลัก</a></li> -->
-          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">หน้าหลัก</a></li>
-          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/user-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">คำสั่งซื้อ</a></li>
-          <li *ngIf="userDetail?.roleId == 2"><a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">โปรไฟล์</a></li>
-      
-          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/manage-user" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการลูกค้า</a></li>
-          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/manage-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการสินค้า</a></li>
-          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/order" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการคำสั่งซื้อ</a></li>
-          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">โปรไฟล์</a></li>
-          <li *ngIf="userDetail?.roleId == 1"><a routerLink="/report" routerLinkActive="router-link-active" class="nav-link px-2 text-white">รายงาน</a></li>
-        </ul>
-        <div class="text-end" *ngIf="!userDetail">
-          <button type="button" class="btn btn-outline-light me-2" routerLink="/login" routerLinkActive="router-link-active">Login</button>
-          <button type="button" class="btn btn-warning" routerLink="/register" routerLinkActive="router-link-active">Sign-up</button>
-        </div>
-        <button *ngIf="userDetail?.roleId == 2" class="btn btn-dark me-4 d-flex align-items-center mb-md-1" routerLink="/cart">
-          <i style="font-size: 18px; color: blue" class="fas fa-cart-plus me-2" routerLinkActive="router-link-active"></i>
-          <div   style="font-size: 10px; margin-left: 5px; color: black;" class="badge btn-light">{{ totalItem }}</div>
-        </button>
-   
-          <div class="text-end" *ngIf="userDetail">
-            <button type="button" class="btn btn-outline-light me-2" (click)="logout()">Logout</button>
-          </div>
-        </div>
+<!-- <header class="p-3 bg-blue-500 text-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a routerLink="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li *ngIf="userDetail?.roleId == 2">
+          <a routerLink="/home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">หน้าหลัก</a>
+        </li>
+        <li *ngIf="userDetail?.roleId == 2">
+          <a routerLink="/user-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">คำสั่งซื้อ</a>
+        </li>
+        
+        <li *ngIf="userDetail?.roleId == 1">
+          <a routerLink="/manage-user" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการลูกค้า</a>
+        </li>
+        <li *ngIf="userDetail?.roleId == 1">
+          <a routerLink="/manage-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการสินค้า</a>
+        </li>
+        <li *ngIf="userDetail?.roleId == 1">
+          <a routerLink="/order" routerLinkActive="router-link-active" class="nav-link px-2 text-white">จัดการคำสั่งซื้อ</a>
+        </li>
+      </ul>
+      <div class="text-end" *ngIf="!userDetail">
+        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" routerLink="/login" routerLinkActive="router-link-active">Login</button>
+        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" routerLink="/register" routerLinkActive="router-link-active">Sign-up</button>
       </div>
-  </header>
-  
+      
+    
+      <div *ngIf="imgUser">
+        <img [src]="'data:image/jpeg;base64,' + imgUser" alt="User Image" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+      </div>
+      <button *ngIf="userDetail?.roleId == 2" type="button" routerLink="/cart" class="text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg routerLinkActive="router-link-active" class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+          <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+        </svg>
+        
+        {{ totalItem }}
+      </button>
+      <button *ngIf="userDetail" type="button" (click)="logout()" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Logout
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header> -->
+  <!-- <button  *ngIf="userDetail" type="button" routerLink="/profile" routerLinkActive="router-link-active" >
+        <i class="bi bi-person-circle"></i>
+      </button> -->
+
+<header class="p-3 bg-blue-500 text-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a routerLink="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li *ngIf="userDetail?.roleId === 2">
+          <a routerLink="/home" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            หน้าหลัก <i class="bi bi-house-fill"></i></a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 2">
+          <a routerLink="/user-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            คำสั่งซื้อ <i class="bi bi-box-seam-fill"></i>
+          </a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 2">
+          <a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            โปรไฟล์ <i class="bi bi-images"></i></a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 1">
+          <a routerLink="/manage-user" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            จัดการลูกค้า  <i class="bi bi-person-circle"></i> 
+          </a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 1">
+          <a routerLink="/manage-product" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            จัดการสินค้า <i class="bi bi-bag-heart-fill"></i>
+          </a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 1">
+          <a routerLink="/order" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            จัดการคำสั่งซื้อ <i class="bi bi-basket-fill"></i>
+          </a>
+        </li>
+        <li *ngIf="userDetail?.roleId === 1">
+          <a routerLink="/profile" routerLinkActive="router-link-active" class="nav-link px-2 text-white">
+            โปรไฟล์ <i class="bi bi-images"></i></a>
+        </li>
+      </ul>
+      <div class="text-end" *ngIf="!userDetail">
+        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" routerLink="/login" routerLinkActive="router-link-active">Login</button>
+        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" routerLink="/register" routerLinkActive="router-link-active">Sign-up</button>
+      </div>
+      <div *ngIf="null != userDetail"  routerLink="/profile" routerLinkActive="router-link-active" >
+        <div *ngIf="imgUser">
+        <img [src]="'data:image/jpeg;base64,' + imgUser" alt="User Image" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+      </div>
+      </div>
+      <button *ngIf="userDetail?.roleId == 2" type="button" routerLink="/cart" routerLinkActive="router-link-active" class="text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <!-- <svg routerLinkActive="router-link-active" class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+          <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+        </svg> -->
+        <i class="bi bi-cart3"></i>
+        <span class="badge rounded-pill bg-danger">{{ totalItem > 0 ? totalItem : '' }}</span>
+    
+      </button>
+      <button *ngIf="userDetail" type="button" (click)="logout()" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Logout
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

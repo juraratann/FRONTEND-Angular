@@ -78,3 +78,17 @@ width: fit-content;
 /* .border-b {
 border-bottom: 1px solid #e5e7eb;
 } */
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+

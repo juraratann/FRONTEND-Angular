@@ -1,65 +1,36 @@
-<!-- 
-<td class="align-middle text-center">
-  <p class="font-weight-bold mb-0">{{ order.ordersId }}</p>
-</td>
-<td class="align-middle text-center">
-  <p class="font-weight-bold mb-0">{{ order.userId }}</p>
-</td>
-<td *ngIf="userData" class="align-middle text-center">
-  <p class="font-weight-bold mb-0">{{ userData.firstName }} {{ userData.lastName }}</p>
-</td>
-<td *ngIf="userData" class="align-middle text-center">
-  <span class="text-xs">{{ userData.phone }}</span>
-</td>
-<td class="align-middle text-center">
-  <span *ngIf="order.status == '1'" class="badge bg-success">ชำระเงินแล้ว</span>
-  <span *ngIf="order.status != '1'" class="badge bg-danger">ยังไม่ชำระเงิน</span>
-</td>
-<td class="align-middle text-center">
-  <span class="text-xs">{{ order.createDate | date: 'medium' }}</span>
-</td>
-<td class="align-middle text-center">
-  <span class="text-xs">{{ order.address }}</span>
-</td>
-<td class="align-middle text-center">
-  <span class="text-xs">{{ order.province }}</span>
-</td>
-<td class="align-middle text-center">
-  <span class="text-xs">{{ order.zipcode }}</span>
-</td> -->
 
-<form [formGroup]="updateOrderForm" (ngSubmit)="onSubmit()" class="mt-6">
-    <div class="form-group">
-      <label for="orderId">Order ID</label>
-      <input  formControlName="orderId" type="text" class="form-control" />
+<div class="modal fade pt-4" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered custom-modal-width">
+    <div class="modal-content">
+      <div class="modal-header bg-white shadow-dark">
+        <h4 class="modal-title text-black" id="exampleModalLabel">
+          สถานะการชำระเงิน
+        </h4>
+        <button type="button" class="btn-close red-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-column align-items-center">
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+          <div class="modal-body d-flex flex-column align-items-center">
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+              <div class="modal-body-content w-100 text-center">
+                <div class="form-outline">
+                  <label class="form-label" for="paymentStatus">สถานะการชำระเงิน</label>
+                  <select formControlName="status" id="paymentStatus" class="form-select form-select-lg">
+                    <option *ngFor="let status of statuses" [value]="status.value" [selected]="status.value == selectedProduct?.status">
+                      {{ status.label }}
+                    </option>
+                  </select>
+                </div>
+                <br />
+                <button name="submit" type="submit" class="btn btn-success">
+                  Update สถานะการชำระเงิน
+                </button>
+              </div>
+            </form>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="userId">User ID</label>
-      <input  formControlName="userId" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="orderDate">Order Date</label>
-      <input  formControlName="orderDate" type="date" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="itemCode">Item Code</label>
-      <input  formControlName="itemCode" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="totalAmount">Total Amount</label>
-      <input  formControlName="totalAmount" type="number" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="paymentId">Payment ID</label>
-      <input  formControlName="paymentId" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="addressId">Address ID</label>
-      <input  formControlName="addressId" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="status">Status</label>
-      <input  formControlName="status" type="text" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary mt-4" >Update Order</button>
-  </form>
+  </div>
+</div>
+

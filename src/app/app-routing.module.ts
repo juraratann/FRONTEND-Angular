@@ -19,6 +19,7 @@ import { PaymentComponent } from './modules/payment/payment.component';
 import { OrderComponent } from './modules/order/order.component';
 import { UpdateOrderComponent } from './modules/updateOrder/updateOrder.component';
 import { UserproductComponent } from './modules/userproduct/userproduct.component';
+import { UserhomeComponent } from './modules/userhome/userhome.component';
 
 
 const routes: Routes = [
@@ -80,6 +81,9 @@ const routes: Routes = [
     },{
       path: 'user-product',
       component: UserproductComponent
+    },{
+      path: '',
+      component: UserhomeComponent
     }]
   }
 ];

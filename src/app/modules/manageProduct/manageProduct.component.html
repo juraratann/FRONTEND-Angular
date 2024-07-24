@@ -12,7 +12,7 @@
                 <div class="col-6 d-flex align-items-center">
                 </div>
                 <div class="col-6 text-end">
-                  <a class="btn bg-gradient-success mb-0" [routerLink]="['/product']"><i class="material-icons text-sm">add</i>เพิ่มสินค้า</a>
+                  <a class="btn bg-gradient-success mb-0" [routerLink]="['/product']"><i class="bi bi-file-plus"></i>เพิ่มสินค้า</a>
                 </div>
               </div>
             </div>
@@ -55,8 +55,12 @@
                       <span class="text-secondary text-xs font-weight-bold">{{product.quantity}}</span>
                     </td>
                     <td class="align-middle text-center">
-                        <button class="btn btn-warning"  (click)="onUpdateProduct(product.productId)">แก้ไข</button>
-                        <button class="btn btn-danger" (click)="onDeleteProduct(product.productId)">ลบ</button>
+                        <button class="btn btn-warning"  (click)="onUpdateProduct(product.productId)">
+                          <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-danger" (click)="onDeleteProduct(product.productId)">
+                          <i class="bi bi-trash-fill"></i>
+                        </button>
                       </td>
                   </tr>
                 </tbody>

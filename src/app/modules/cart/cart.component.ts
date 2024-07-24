@@ -24,18 +24,16 @@ interface CartItem {
 export class CartComponent implements OnInit {
   public selectedProduct: any;
   public formData: FormGroup;
-
   public productId: number[] = [];
- 
   public quantity: number [] = [];
-
   public productList: CartItem[] = [];
   public grandTotal: number = 0;
   public imageBlobUrl: any;
-
   public provinces: any[] = [];
+  promptpayNumber = '0626922817'; // ใส่หมายเลข PromptPay ที่ใช้
 
- 
+  qrCodeUrl: string = ''; // เพิ่มตัวแปรสำหรับเก็บ URL ของ QR Code
+
   cartItems: any[] = [];
   totalCost: number = 0;
   hours: number = 0;
@@ -45,7 +43,7 @@ export class CartComponent implements OnInit {
   userId: any;
   userDetail: any;
   title: any;
- 
+  selectedFiles : any = []
 
 
 
@@ -74,9 +72,8 @@ export class CartComponent implements OnInit {
       address: '',
       province: '',
       zipcode: '',
+      files : [],
     });
-
-    
   }
 
 
@@ -124,8 +121,19 @@ export class CartComponent implements OnInit {
         // Handle case where userDetail is not found in sessionStorage
       }
     } 
+       // คำนวณและสร้าง URL ของ QR Code
+       this.generateQRCode();
   }
   
+  generateQRCode() {
+    // เพิ่มราคาทั้งหมดอีก 40 หน่วย
+    const totalWithExtra = this.totalCost ;
+    // สร้าง URL ของ QR Code โดยใช้หมายเลข PromptPay และราคาที่เพิ่ม 40 หน่วย
+    this.qrCodeUrl = `https://promptpay.io/${this.promptpayNumber}/${this.grandTotal}.png`;
+    console.log(this.qrCodeUrl);
+    console.log(this.totalCost);
+  }
+
   getImageList(imageNames: any[], imgList: any) {
     for (let imageName of imageNames) {
       this.callService.getBlobThumbnail(imageName.productImgName).subscribe((res) => {
@@ -163,51 +171,66 @@ export class CartComponent implements OnInit {
     this.grandTotal = this.productList.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   }
 
+  onFileChanged(event: any) {
+    this.selectedFiles.push(event.target.files);
+  }
 
 
   onSubmit(): void {
-
-
+    // นำ productId จาก productList
     this.productId = this.productList.map(item => item.productId);
     this.formData.patchValue({ productId: this.productId });
-    
+  
+    // นำ quantity จาก productList
     this.quantity = this.productList.map(item => item.quantity);
     this.formData.patchValue({ quantity: this.quantity });
   
+    // แสดงค่า formData ใน console
     console.log('Form Data:', this.formData.value);
   
+    // เรียกใช้ฟังก์ชัน saveOrder
     this.callService.saveOrder(this.formData.value).subscribe(
-      response => {
-        console.log('Form submitted successfully:', response);
-
-        const responseData = response.data; // Extract data from response
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Form submitted successfully.',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const queryParams = {
-              responseData: responseData
-            };
-            this.router.navigate(['/user-product'], { queryParams });
-
-            // Clear cart items after successful order submission
-            this.cartservice.removeAllCartItems();
-          }
-        });
-      },
-      error => {
-        console.error('Error submitting form:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Failed to submit form. Please try again later.',
-          confirmButtonText: 'OK'
-        });
+      response => { if(response.data){
+        console.log('ส่งฟอร์มสำเร็จ:', response);
+  
+        // const responseData = response.data; // ดึงข้อมูลจาก response
+  
+        // วนลูปอัพโหลดไฟล์ที่เลือก
+        for (const file of this.selectedFiles[0]) {
+          const formData = new FormData();
+          formData.append('file', file); 
+          this.callService.saveQrcode(formData, response.data).subscribe(
+            res => {
+              console.log("saveImage=>", response.data);
+            }
+          );
+        }
+  
+        // แสดง Swal แจ้งเตือนเมื่อส่งฟอร์มสำเร็จ
+        if(response.data){
+          Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ!',
+            text: 'บันทึกข้อมูลสำเร็จ',
+            confirmButtonText: 'ตกลง',
+          }).then(res=>{
+            if(res.isConfirmed){
+              this.router.navigate(['/user-product']);
+            }
+          })
+          
+        }else{
+          Swal.fire({
+            icon: 'warning',
+            title: 'บันทึกไม่สำเร็จ!',
+            text: 'กรุณาตรวจสอบข้อมูล ด้วยค่ะ',
+            confirmButtonText: 'ตกลง',
+          });
+        }
+      }
       }
     );
   }
+  
+  
 }

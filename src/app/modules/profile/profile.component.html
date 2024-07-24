@@ -6,33 +6,44 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            background: #eef2f7;
+        }
         .container {
-            background: #f8f9fa;
+            background: #ffffff;
             border-radius: 15px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
         .profile-img img {
             width: 150px;
             height: 150px;
             object-fit: cover;
             border-radius: 50%;
-            border: 5px solid #fff;
+            border: 5px solid #ffffff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         .font-weight-bold {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
         .form-control {
             border-radius: 10px;
+            margin-bottom: 15px;
         }
-        .btn-dark {
-            background: #343a40;
+        .btn-custom {
+            background: #ff6f61;
             border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
+            border-radius: 25px;
+            padding: 10px 30px;
+            color: #ffffff;
+            transition: background 0.3s;
         }
-        .btn-dark:hover {
-            background: #23272b;
+        .btn-custom:hover {
+            background: #e35d54;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
@@ -40,46 +51,52 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5" *ngIf="user">
                     <div class="profile-img">
-                        <img src="data:image;base64,{{imgUser}}" alt="User Image">
+                        <img [src]="'data:image;base64,'+imgUser" alt="User Image">
                     </div>
-                    <span class="font-weight-bold">{{userDetail.fristName}} {{userDetail.lastName}}</span>
-                    <span class="text-black-50"></span>
-                    <span></span>
+                    <span class="font-weight-bold mt-3">{{userDetail.fristName}} {{userDetail.lastName}}</span>
+                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="onChangePictureClick()">
+                        <i class="bi bi-folder-plus"></i> Add a picture 
+                        <!-- <i class="bi bi-image"></i>  -->
+                    </button>
+                    <input type="file" id="fileInput" (change)="onFileSelected($event)" style="display: none;">
+                    <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-400 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"  (click)="onChangePictureClick()">
+                        Change picture <i class="bi bi-images"></i></button>
+                    <input type="file" id="fileInput" (change)="onFileSelected($event)" style="display: none;">
                 </div>
-            </div>
-            <div class="col-md-9 border-right">
+            </div> 
+            <div class="col-md-9">
                 <div class="p-3 py-5">
                     <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
                         <div class="form-group row">
                             <label for="username" class="col-4 col-form-label">User Name</label>
                             <div class="col-12">
-                                <input formControlName="userName" placeholder="Username" class="form-control here" required="required" type="text" readonly>
+                                <input formControlName="userName" placeholder="Username" class="form-control" required="required" type="text" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">First Name</label>
                             <div class="col-12">
-                                <input formControlName="fristName" placeholder="First Name" class="form-control here" type="text">
+                                <input formControlName="fristName" placeholder="First Name" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="lastname" class="col-4 col-form-label">Last Name</label>
                             <div class="col-12">
-                                <input formControlName="lastName" placeholder="Last Name" class="form-control here" type="text">
+                                <input formControlName="lastName" placeholder="Last Name" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone" class="col-4 col-form-label">Phone</label>
                             <div class="col-12">
-                                <input formControlName="phone" placeholder="Phone" class="form-control here" required="required" type="text">
+                                <input formControlName="phone" placeholder="Phone" class="form-control" required="required" type="text">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="age" class="col-4 col-form-label">Age</label>
                             <div class="col-12">
-                                <input formControlName="age" placeholder="Age" class="form-control here" required="required" type="text">
+                                <input formControlName="age" placeholder="Age" class="form-control" required="required" type="text">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -90,10 +107,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button name="submit" type="submit" class="btn btn-dark">Update My Profile</button>
-                            </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button name="submit" type="submit" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Update</button>
+                            <!-- <button name="submit" type="submit" class="btn btn-dark">Update My Profile</button> -->
                         </div>
                     </form>
                 </div>

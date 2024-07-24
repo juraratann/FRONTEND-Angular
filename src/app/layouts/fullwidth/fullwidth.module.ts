@@ -24,6 +24,7 @@ import { PaymentComponent } from 'src/app/modules/payment/payment.component';
 import { OrderComponent } from 'src/app/modules/order/order.component';
 import { UpdateOrderComponent } from 'src/app/modules/updateOrder/updateOrder.component';
 import { UserproductComponent } from 'src/app/modules/userproduct/userproduct.component';
+import { UserhomeComponent } from 'src/app/modules/userhome/userhome.component';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { UserproductComponent } from 'src/app/modules/userproduct/userproduct.co
     PaymentComponent,
     OrderComponent,
     UpdateOrderComponent,
-    UserproductComponent
+    UserproductComponent,
+    UserhomeComponent
   
   ]
 })

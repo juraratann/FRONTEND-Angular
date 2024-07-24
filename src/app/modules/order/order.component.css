@@ -78,3 +78,78 @@ td img {
 /* .border-b {
   border-bottom: 1px solid #e5e7eb;
 } */
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.btn-close {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  opacity: 0.75;
+}
+
+.img-wrapper {
+  border: 1px solid #dee2e6;
+  padding: 5px;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.img-wrapper:hover {
+  transform: scale(1.05);
+}
+
+.product-img {
+  max-width: 100px;
+  height: auto;
+  border-radius: 8px;
+}
+
+
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    opacity: 0.5;
+}
+
+.btn-close:hover {
+    opacity: 0.75;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+}
+
+.modal-footer .btn-block {
+    width: 100%;
+}
